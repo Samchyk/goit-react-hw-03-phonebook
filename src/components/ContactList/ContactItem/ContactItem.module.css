@@ -1,0 +1,14 @@
+.item {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+	list-style: none;
+	border-radius: 5px;
+}
+.item:nth-child(odd) {
+	background-color: rgb(202, 202, 202);
+}
+.btn {
+	cursor: pointer;
+}

@@ -1,0 +1,22 @@
+.form {
+	width: 400px;
+	padding: 20px;
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(202, 202, 202);
+}
+.label {
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+}
+.label input {
+	margin-top: 5px;
+	width: 150px;
+}
+.form button {
+	cursor: pointer;
+	padding: 5px 10px;
+	margin: 0 auto;
+}

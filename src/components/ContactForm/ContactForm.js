@@ -18,19 +18,35 @@ class ContactForm extends Component {
       const newContact = {
          name,
          number,
-         id: nanoid(5),
+         id: String(nanoid(5)),
       };
-      if (this.props.checkNewContact(newContact)) {
+      if (this.checkNewContact(newContact)) {
          return;
       }
-      this.props.onSubmit(newContact);
+      this.props.addContact(newContact);
       this.reset();
    };
    reset = () => {
       this.setState({ ...INITIALE_STATE });
    };
+
+   checkNewContact = newContact => {
+      if (
+         this.props.visibleContacts.find(
+            contact =>
+               contact.name.toLocaleLowerCase() ===
+               newContact.name.toLocaleLowerCase()
+         )
+      ) {
+         alert(newContact.name + ' is alredy in contacts');
+         return true;
+      }
+      return false;
+   };
+
    render() {
       const { number, name } = this.state;
+
       return (
          <form className={s.form} onSubmit={this.onSubmit}>
             <label className={s.label}>
@@ -65,7 +81,7 @@ class ContactForm extends Component {
 
 ContactForm.propTypes = {
    onSubmit: PropTypes.func.isRequired,
-   checkNewContact: PropTypes.func.isRequired,
+   visibleContacts: PropTypes.func.isRequired,
 };
 
 export default ContactForm;

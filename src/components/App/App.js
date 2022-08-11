@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Filter from './Filter/Filter';
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
+import Filter from 'components/Filter/Filter';
+import ContactForm from 'components/ContactForm/ContactForm';
+import ContactList from 'components//ContactList/ContactList';
 
 class App extends Component {
    state = {
@@ -13,6 +13,7 @@ class App extends Component {
       ],
       filter: '',
    };
+
    componentDidMount() {
       const contacts = JSON.parse(localStorage.getItem('contacts'));
       contacts && this.setState({ contacts });
@@ -23,32 +24,21 @@ class App extends Component {
          localStorage.setItem('contacts', JSON.stringify(nextState));
       }
    }
-   onSubmit = newContact => {
+   addContact = newContact => {
       this.setState(prevState => ({
          contacts: [...prevState.contacts, newContact],
       }));
    };
-   checkNewContact = newContact => {
-      if (
-         this.state.contacts.find(
-            contact =>
-               contact.name.toLocaleLowerCase() ===
-               newContact.name.toLocaleLowerCase()
-         )
-      ) {
-         alert(newContact.name + ' is alredy in contacts');
-         return true;
-      }
-      return false;
-   };
-   onChangeFilter = e => {
-      this.setState({ filter: e.target.value });
+
+   onChangeFilter = async e => {
+      await this.setState({ filter: e.target.value });
    };
    deleteContact = id => {
       this.setState(prevState => ({
          contacts: prevState.contacts.filter(contact => contact.id !== id),
       }));
    };
+
    render() {
       const { contacts, filter } = this.state;
       const normFilter = filter.toLocaleLowerCase();
@@ -57,11 +47,11 @@ class App extends Component {
       );
 
       return (
-         <div className="main">
+         <div>
             <h1>Phonebook</h1>
             <ContactForm
-               onSubmit={this.onSubmit}
-               checkNewContact={this.checkNewContact}
+               addContact={this.addContact}
+               visibleContacts={visibleContacts}
             />
             <h2>Contacts</h2>
             <Filter filter={filter} onChange={this.onChangeFilter} />
